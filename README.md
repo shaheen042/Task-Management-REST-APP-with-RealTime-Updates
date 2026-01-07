@@ -1,13 +1,13 @@
 # Task-Management-REST-APP-with-RealTime-Updates
 Task Manager is a professional full-stack dashboard featuring a "Linear-style" UI. Built with React, Node.js, and PostgreSQL, it offers real-time stat updates via Socket.io, priority tracking, and a seamless Dark/Light mode. Experience high-end productivity with colorful status indicators and a fully responsive, data-driven design.
-# 📝 TaskFlow | Real-Time Task Management System
+# 📝 TaskManager | Real-Time Task Management System
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![Node](https://img.shields.io/badge/node-%3E%3D%2016.0.0-brightgreen)
 ![PostgreSQL](https://img.shields.io/badge/database-PostgreSQL-blue)
 ![Socket.io](https://img.shields.io/badge/realtime-Socket.io-orange)
 
-TaskFlow is a modern, full-stack Task Management application built to handle your daily workflow with real-time updates. Using WebSockets, the application ensures that any change made to a task is instantly reflected across all connected users without refreshing the page.
+TaskManager is a modern, full-stack Task Management application built to handle your daily workflow with real-time updates. Using WebSockets, the application ensures that any change made to a task is instantly reflected across all connected users without refreshing the page.
 
 ---
 
