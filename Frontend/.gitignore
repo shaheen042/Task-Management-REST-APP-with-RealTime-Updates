@@ -10,6 +10,9 @@ node_modules/
 .env.development.local
 .env.test.local
 .env.production.local
+.env
+server/.env
+node_modules/
 
 # Logs
 *.log
