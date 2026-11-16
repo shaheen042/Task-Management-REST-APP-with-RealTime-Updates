@@ -6,7 +6,9 @@ import TaskCard from './components/TaskCard';
 import TaskModal from './components/TaskModal';
 import './App.css';
 
-const socket = io('http://localhost:5000');
+const API_URL = import.meta.env.VITE_API_URL;
+
+const socket = io(API_URL);
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -16,7 +18,7 @@ function App() {
   const [theme, setTheme] = useState('dark');
 
   const fetchTasks = async () => {
-    const res = await axios.get(`http://localhost:5000/api/tasks`);
+    const res = await axios.get(`${API_URL}/api/tasks`);
     setTasks(res.data);
   };
 

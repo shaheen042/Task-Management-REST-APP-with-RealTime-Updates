@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const TaskModal = ({ isOpen, onClose, editData }) => {
   const [formData, setFormData] = useState({ 
     title: '', description: '', status: 'To Do', priority: 'Medium', duedate: '' 
@@ -15,8 +17,8 @@ const TaskModal = ({ isOpen, onClose, editData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (editData) await axios.patch(`http://localhost:5000/api/tasks/${editData.id}`, formData);
-    else await axios.post('http://localhost:5000/api/tasks', formData);
+    if (editData) await axios.patch(`${API_URL}/api/tasks/${editData.id}`, formData);
+    else await axios.post(`${API_URL}/api/tasks`, formData);
     onClose();
   };
 
