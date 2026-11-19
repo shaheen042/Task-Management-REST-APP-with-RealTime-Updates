@@ -18,8 +18,12 @@ function App() {
   const [theme, setTheme] = useState('dark');
 
   const fetchTasks = async () => {
-    const res = await axios.get(`${API_URL}/api/tasks`);
-    setTasks(res.data);
+    try {
+      const res = await axios.get(`${API_URL}/api/tasks`);
+      setTasks(Array.isArray(res.data) ? res.data : []);
+    } catch (err) {
+      console.error('Error fetching tasks:', err);
+    }
   };
 
   useEffect(() => {
@@ -79,14 +83,24 @@ function App() {
         <div className="task-grid">
           {filteredTasks.length > 0 ? (
             filteredTasks.map(task => (
-              <TaskCard key={task.id} task={task} onEdit={() => {setEditTask(task); setIsModalOpen(true)}} />
+              <TaskCard 
+                key={task.id} 
+                task={task} 
+                onEdit={() => {setEditTask(task); setIsModalOpen(true)}} 
+                onDelete={fetchTasks}
+              />
             ))
           ) : (
             <div className="empty-state">No pending tasks</div>
           )}
         </div>
 
-        <TaskModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} editData={editTask} />
+        <TaskModal 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+          editData={editTask} 
+          onSuccess={fetchTasks}
+        />
       </main>
     </div>
   );

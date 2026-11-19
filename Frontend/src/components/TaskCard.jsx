@@ -3,10 +3,16 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const TaskCard = ({ task, onEdit }) => {
+const TaskCard = ({ task, onEdit, onDelete }) => {
   const deleteHandler = async () => {
     if (window.confirm("Delete this task?")) {
-      await axios.delete(`${API_URL}/api/tasks/${task.id}`);
+      try {
+        await axios.delete(`${API_URL}/api/tasks/${task.id}`);
+        if (onDelete) onDelete();
+      } catch (err) {
+        console.error('Failed to delete task:', err);
+        alert('Failed to delete task.');
+      }
     }
   };
 

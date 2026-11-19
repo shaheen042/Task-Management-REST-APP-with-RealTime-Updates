@@ -8,21 +8,34 @@ const cors = require('cors');
 const app = express();
 const server = http.createServer(app);
 
-// Socket.io setup with dynamic CORS
+// Socket.io setup with CORS
 const io = new Server(server, {
-    cors: { origin: "http://localhost:5173" } 
+    cors: { 
+        origin: "*",
+        methods: ["GET", "POST", "PATCH", "DELETE"]
+    } 
 });
 
-// Postgres Connection using .env variables
+// Postgres Connection using DATABASE_URL or individual .env variables
+const poolConfig = process.env.DATABASE_URL
+    ? {
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    }
+    : {
+        user: process.env.DB_USER,
+        host: process.env.DB_HOST,
+        database: process.env.DB_NAME,
+        password: process.env.DB_PASSWORD,
+        port: process.env.DB_PORT,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    };
 
-const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
-    ssl: true,
-});
+const pool = new Pool(poolConfig);
 
 app.use(cors());
 app.use(express.json());

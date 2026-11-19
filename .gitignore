@@ -1,8 +1,8 @@
 # Dependencies
 node_modules/
-/dist
-/dist-ssr
-/build
+dist/
+dist-ssr/
+build/
 
 # Environment / Secrets (VERY IMPORTANT)
 .env

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const TaskModal = ({ isOpen, onClose, editData }) => {
+const TaskModal = ({ isOpen, onClose, editData, onSuccess }) => {
   const [formData, setFormData] = useState({ 
     title: '', description: '', status: 'To Do', priority: 'Medium', duedate: '' 
   });
@@ -17,9 +17,15 @@ const TaskModal = ({ isOpen, onClose, editData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (editData) await axios.patch(`${API_URL}/api/tasks/${editData.id}`, formData);
-    else await axios.post(`${API_URL}/api/tasks`, formData);
-    onClose();
+    try {
+      if (editData) await axios.patch(`${API_URL}/api/tasks/${editData.id}`, formData);
+      else await axios.post(`${API_URL}/api/tasks`, formData);
+      if (onSuccess) onSuccess();
+      onClose();
+    } catch (err) {
+      console.error('Failed to save task:', err);
+      alert('Failed to save task. Please check server connection.');
+    }
   };
 
   return (
