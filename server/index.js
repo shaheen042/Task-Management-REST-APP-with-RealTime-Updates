@@ -25,11 +25,11 @@ const poolConfig = process.env.DATABASE_URL
         }
     }
     : {
-        user: process.env.DB_USER,
-        host: process.env.DB_HOST,
-        database: process.env.DB_NAME,
-        password: process.env.DB_PASSWORD,
-        port: process.env.DB_PORT,
+        user: process.env.DB_USER || process.env['DB User'],
+        host: process.env.DB_HOST || process.env['DB host'],
+        database: process.env.DB_NAME || process.env['DB name'] || 'postgres',
+        password: process.env.DB_PASSWORD || process.env['DB password'] || process.env['DB Password'],
+        port: process.env.DB_PORT || process.env['DB port'] || 6543,
         ssl: {
             rejectUnauthorized: false
         }
@@ -39,6 +39,11 @@ const pool = new Pool(poolConfig);
 
 app.use(cors());
 app.use(express.json());
+
+// Root test endpoint
+app.get('/', (req, res) => {
+    res.json({ message: "Task Management API is running", status: "OK" });
+});
 
 // Socket.io connection logging
 io.on('connection', (socket) => {
